@@ -1,23 +1,43 @@
-import pandas as pd 
-from sklearn.model_selection import train_test_split 
-from sklearn.preprocessing import StandardScaler 
-from sklearn.neural_network import MLPClassifier 
-from sklearn.metrics import accuracy_score 
-data = pd.read_csv(r'winequality-red.csv', sep=";")
-X = data.drop("quality", axis=1) 
-y = data["quality"] 
-y = pd.cut(y, bins=[0, 5, 7, 10], labels=[0, 1, 2]) 
-print("Class distribution:") 
-print(y.value_counts()) 
-X_train, X_test, y_train, y_test = train_test_split(X, y, 
- test_size=0.2,random_state=42,stratify=y) 
-scaler = StandardScaler() 
-X_train = scaler.fit_transform(X_train) 
-X_test = scaler.transform(X_test) 
-architectures = [ (5,),(10,),(20,),(10, 5)] 
-for i, arch in enumerate(architectures): 
- model = MLPClassifier( hidden_layer_sizes=arch, activation="relu", solver="adam", 
- max_iter=2000,random_state=i ) 
- model.fit(X_train, y_train) 
- y_pred = model.predict(X_test) print("\nArchitecture:", arch)
- print("Accuracy:", round(accuracy_score(y_test, y_pred) * 100, 2), "%")
+import pandas as pd
+
+from sklearn.model selection import train test split
+
+from sklearn.preprocessing import StandardScaler
+
+from sklearn.neural network import MLPClassifier
+
+from sklearn.metrics import accuracy_score
+
+data-pd.read_csv(r'winequality-red.csv',sep=",")
+
+x=data.drop("quality", axis=1)
+
+y-data ["quality"]
+
+y-pd.cut (y,bins=[0,5,7,10], labels=[0,1,2])
+
+print ("Class distribution:")
+
+print(y.value counts())
+
+x_train,x_test,y_train,y_test=train test split(x, y, test size=0.2,random_state=42)
+
+scaler-StandardScaler()
+
+x_train=scaler.fit_transform(x train)
+
+x test-scaler.transform(x test)
+
+architectures=[(5,), (10), (20,), (10,5)]
+
+for i, arch in enumerate (architectures):
+
+model MLPClassifier (hidden_layer_sizes=arch,activation="relu", solver="adam", max_iter=2000, random_state=i)
+
+model.fit(x_train,y_train)
+
+y_pred model.predict (x test)
+
+print("\nArchitecture:",arch)
+
+print("Accuracy:", round (accuracy_score (y_test, y_pred) *100,2),"%")
