@@ -1,0 +1,52 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans, AgglomerativeClustering
+from sklearn.metrics import silhouette_score
+
+# Load the dataset
+data = pd.read_csv("Mall_Customers.csv")
+
+# Select the required features
+x = data[['Annual Income (k$)', 'Spending Score (1-100)']]
+
+# Standardize the data
+x = StandardScaler().fit_transform(x)
+
+# K-Means Clustering
+kmeans = KMeans(n_clusters=5, random_state=42, n_init=10)
+
+k_labels = kmeans.fit_predict(x)
+
+print("K-Means Inertia:", round(kmeans.inertia_, 2))
+print("K-Means Silhouette Score:",
+      round(silhouette_score(x, k_labels), 3))
+
+# Hierarchical Clustering
+agg = AgglomerativeClustering(n_clusters=5)
+
+a_labels = agg.fit_predict(x)
+
+print("Hierarchical Silhouette Score:",
+      round(silhouette_score(x, a_labels), 3))
+
+# Plot the clustering results
+plt.figure(figsize=(10, 4))
+
+# K-Means plot
+plt.subplot(1, 2, 1)
+plt.scatter(x[:, 0], x[:, 1], c=k_labels, cmap='viridis')
+plt.title("K-Means Clustering")
+plt.xlabel("Annual Income (Standardized)")
+plt.ylabel("Spending Score (Standardized)")
+
+# Hierarchical clustering plot
+plt.subplot(1, 2, 2)
+plt.scatter(x[:, 0], x[:, 1], c=a_labels, cmap='viridis')
+plt.title("Hierarchical Clustering")
+plt.xlabel("Annual Income (Standardized)")
+plt.ylabel("Spending Score (Standardized)")
+
+plt.tight_layout()
+plt.show()
