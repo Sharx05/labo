@@ -1,0 +1,56 @@
+
+import time
+import numpy as np
+from sklearn.datasets import load_digits
+from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import accuracy_score
+
+data = load_digits()
+
+X = data.data
+y = data.target
+
+X = X / 16.0
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+def relu(x):
+    return np.maximum(0, x)
+
+def tanh(x):
+    return np.tanh(x)
+
+print("Sigmoid:", sigmoid(2))
+print("ReLU:", relu(2))
+print("Tanh:", tanh(2))
+
+activations = ['logistic', 'relu', 'tanh']
+
+for act in activations:
+    start = time.time()
+
+    model = MLPClassifier(
+        hidden_layer_sizes=(50,),
+        activation=act,
+        max_iter=500,
+        tol=0.0001,
+        random_state=42
+    )
+
+    model.fit(X_train, y_train)
+
+    y_pred = model.predict(X_test)
+
+    accuracy = accuracy_score(y_test, y_pred)
+    training_time = time.time() - start
+
+    print("\nActivation:", act)
+    print("Accuracy:", round(accuracy * 100, 2), "%")
+    print("Training time:", round(training_time, 3), "seconds")
+    print("Iterations:", model.n_iter_)
