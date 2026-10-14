@@ -31,3 +31,73 @@ print("Inertia", round(inertia, 2))
 print("Silhouette Score", round(silhouette, 3))
 
 print()
+
+
+
+program netural network 
+
+import time
+
+import numpy asop
+
+from @kleaes data sets impart load digits
+
+Stons @klearn model-Selection import train test_split
+
+from sklearn beural_network import Mep classifier
+
+fions skleen. metrics import accuracy_score
+
+data = load_digits ()
+
+X= date date
+
+y = data. target
+
+x=x/16.0 X_kais, X-test, y train, Y-test = train_ Fest_split
+
+(x,y,test_size=0.2 , random State = 42)
+
+def Bigmoid (*):
+
+Retuen Citop-exp(-x))
+
+def relu(x)
+
+Return sp.maximum (0,x)
+
+dej tanh (x):
+
+return sp. tanh (x);
+
+print("sigmoid: ", Bigmoid (2))
+
+print("shu: ", xelux (2))
+
+Peint ("Tank: ", tanh (2))
+
+activation = ['logistic', 'NLU', 'tanh']
+
+for act in a activations:
+
+Start = time.time()
+
+model = Map Classifier (
+
+Ridden-layer-Size = (50,), activations Fact, max_rter = 500, tol=000), randoms_state = 42)
+
+model. fit (x_train, y-train)
+
+y.pred model. predict (X_test)
+
+accuracy = accuracy-score (y-test, y-pred)
+
+kaining-time = time.time(). Start
+
+print (in Activation:", act)
+
+Print ("Accuracy: ", round (accuracy #100,2),"%")
+
+Print ("Raining time:", sound (training-time, 3), "Seconds")
+
+Peint ("Iterations:", model.n_iter_)
